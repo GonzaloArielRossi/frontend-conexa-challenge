@@ -1,3 +1,61 @@
 {
-  "extends": "next/core-web-vitals"
+  // "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "next",
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "simple-import-sort",
+    "perfectionist"
+  ],
+  "rules": {
+    "no-unused-vars": ["warn", "all"],
+    "react/jsx-sort-props": [
+      "warn",
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "noSortAlphabetically": false,
+        "reservedFirst": true
+      }
+    ],
+    "react/no-array-index-key": "error",
+    "react/hook-use-state": "error",
+    "no-cond-assign": ["error", "always"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "prefer-destructuring": "error",
+    "perfectionist/sort-objects": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc",
+        "groups": ["id", "unknown"],
+        "custom-groups": {
+          "id": "id"
+        }
+      }
+    ],
+    "react/no-unknown-property": ["warn", { "ignore": ["jsx", "global"] }]
+  }
+  // "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
 }
