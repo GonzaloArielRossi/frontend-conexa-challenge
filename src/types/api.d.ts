@@ -1,3 +1,13 @@
+export type Origin = {
+  name: string;
+  url: string;
+};
+
+export type Location = {
+  name: string;
+  url: string;
+};
+
 export type Character = {
   id: number;
   name: string;
@@ -5,7 +15,7 @@ export type Character = {
   species: string;
   type: string;
   gender: string;
-  origin: Location;
+  origin: Origin;
   location: Location;
   image: string;
   episode: string[];
