@@ -19,7 +19,7 @@ const customTheme = extendTheme({
       700: '#6a6f77'
     },
     brandGreen: {
-      300: '#0ea092'
+      500: '#0ea092'
     },
     cyan: {
       50: '#E6F6FF',
