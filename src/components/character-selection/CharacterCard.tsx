@@ -32,7 +32,10 @@ export default function CharacterCard({
   const { handleSelectCharacter, isCurrentCharacterSelected } =
     useCharacterSelection(character, characterPanelId);
 
-  const badges = useCharacterBadges(character.status, character.species);
+  const characterBadges = useCharacterBadges(
+    character.status,
+    character.species
+  );
 
   const handleMouseEnter = () => {
     setCharacterImageScale(1.1);
@@ -90,23 +93,23 @@ export default function CharacterCard({
             </Heading>
           </Tooltip>
           <Stack alignSelf={'flex-start'} bottom={6} direction="column">
-            {badges.map((badge) => {
+            {characterBadges.map((characterBadge) => {
               return (
                 <Badge
-                  key={badge.id}
-                  backgroundColor={`${badge.backgroundColor}.500`}
+                  key={characterBadge.id}
+                  backgroundColor={`${characterBadge.backgroundColor}.500`}
                   color={'white'}
                   size={'sm'}
                   variant="solid"
                 >
                   <Tooltip
                     hasArrow={true}
-                    label={`${badge.label}: ${badge.value}`}
+                    label={`${characterBadge.label}: ${characterBadge.value}`}
                     openDelay={300}
                   >
                     <HStack gap={1}>
-                      <Icon as={badge.icon} />
-                      <Text>{elipsis(badge.value, 17)}</Text>
+                      <Icon as={characterBadge.icon} />
+                      <Text>{elipsis(characterBadge.value, 17)}</Text>
                     </HStack>
                   </Tooltip>
                 </Badge>
