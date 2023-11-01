@@ -17,9 +17,17 @@ export default function useCharacterBadges(
   };
 
   //This function generates a random color based on the character species.
-  // Same species will always get te same color.
+  // Same species will always generate the same color.
   const getSpeciesBadgeColor = () => {
-    const candidateColors = ['cyan', 'purple', 'pink', 'yellow'];
+    const candidateColors = [
+      'blue',
+      'cyan',
+      'purple',
+      'pink',
+      'yellow',
+      'red',
+      'green'
+    ];
     const idx =
       characterSpecies
         .split('')
