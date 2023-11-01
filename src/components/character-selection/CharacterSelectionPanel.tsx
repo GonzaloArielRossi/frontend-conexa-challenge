@@ -1,21 +1,16 @@
-import { Heading, Input, VStack } from '@chakra-ui/react';
+import { Heading, Input, Stack } from '@chakra-ui/react';
 import debounce from 'just-debounce-it';
 import { useCallback, useState } from 'react';
 
 import CharacterCards from '@/components/character-selection/CharacterCards';
 
 export default function CharacterSelectionPanel({
-  onSetEpisodes,
-  title
+  characterPanelId
 }: {
-  onSetEpisodes: (episodes: string[]) => void;
-  title: string;
+  characterPanelId: number;
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [inputValue, setInputValue] = useState('');
-  const [selectedCharacter, setSelectedCharacter] = useState<number | null>(
-    null
-  );
 
   const onSearch = useCallback(
     debounce((query: string) => setSearchTerm(query), 300),
@@ -27,21 +22,12 @@ export default function CharacterSelectionPanel({
     onSearch(e.target.value);
   };
 
-  const handleSelectCharacter = (characterId: number, episodes: string[]) => {
-    if (characterId === selectedCharacter) {
-      setSelectedCharacter(null);
-      return;
-    }
-    setSelectedCharacter(characterId);
-    onSetEpisodes(episodes);
-  };
-
   return (
-    <VStack
+    <Stack
       alignContent={'flex-start'}
       border={'1px solid'}
       direction={'column'}
-      h={'50vh'}
+      h={{ base: '500px', md: '45vh' }}
       padding={4}
       rounded={'md'}
       spacing={6}
@@ -51,9 +37,10 @@ export default function CharacterSelectionPanel({
         as={'h2'}
         fontSize={'lg'}
       >
-        {title}
+        {`Select Character #${characterPanelId}`}
       </Heading>
       <Input
+        h={'40px'}
         mr={'auto'}
         name="search"
         placeholder="Rick, Morty, Beth..."
@@ -63,10 +50,9 @@ export default function CharacterSelectionPanel({
         onChange={handleInputChange}
       />
       <CharacterCards
+        characterPanelId={characterPanelId}
         searchTerm={searchTerm}
-        selectedCharacter={selectedCharacter}
-        onSelectCharacter={handleSelectCharacter}
       />
-    </VStack>
+    </Stack>
   );
 }

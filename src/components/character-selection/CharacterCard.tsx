@@ -13,37 +13,26 @@ import {
   WrapItem
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { FaHeart, FaPassport } from 'react-icons/fa';
 
+import useCharacterSelection from '@/components/character-selection/hooks/useCharacterSelection';
 import { elipsis } from '@/helpers/elipsis';
 import { Character } from '@/types/api';
 
+import useCharacterBadges from './hooks/useCharacterBadges';
+
 export default function CharacterCard({
   character,
-  onSelectCharacter,
-  selectedCharacter
+  characterPanelId
 }: {
   character: Character;
-  onSelectCharacter: (characterId: number, episodes: string[]) => void;
-  selectedCharacter: number | null;
+  characterPanelId: number;
 }) {
   const [characterImageScale, setCharacterImageScale] = useState<number>(1);
-  const badges = [
-    {
-      id: 'species',
-      backgroundColor: 'cyan',
-      icon: FaPassport,
-      label: 'Species',
-      value: character.species
-    },
-    {
-      id: 'status',
-      backgroundColor: 'purple',
-      icon: FaHeart,
-      label: 'Status',
-      value: character.status
-    }
-  ];
+
+  const { handleSelectCharacter, isCurrentCharacterSelected } =
+    useCharacterSelection(character, characterPanelId);
+
+  const badges = useCharacterBadges(character.status, character.species);
 
   const handleMouseEnter = () => {
     setCharacterImageScale(1.1);
@@ -60,7 +49,7 @@ export default function CharacterCard({
         shadow: 'md'
       }}
       as={'li'}
-      borderColor={selectedCharacter === character.id ? 'blue.500' : 'white'}
+      borderColor={isCurrentCharacterSelected ? 'blue.500' : 'white'}
       borderWidth={'2px'}
       justifySelf={'flex-start'}
       overflow={'hidden'}
@@ -69,11 +58,11 @@ export default function CharacterCard({
       shadow={'lg'}
       userSelect={'none'}
       w={'300px'}
-      onClick={() => onSelectCharacter(character.id, character.episode)}
+      onClick={() => handleSelectCharacter()}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {selectedCharacter === character.id && (
+      {isCurrentCharacterSelected && (
         <Box
           backgroundColor={'brandCyan.500'}
           h={'100%'}

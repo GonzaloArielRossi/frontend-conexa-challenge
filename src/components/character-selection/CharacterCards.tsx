@@ -2,17 +2,16 @@ import { Wrap } from '@chakra-ui/react';
 
 import CharacterCard from '@/components/character-selection/CharacterCard';
 import useCharacters from '@/components/character-selection/hooks/useCharacters';
+import ApiErrorMessage from '@/components/feedback/ApiErrorMessage';
 import Loading from '@/components/feedback/Loading';
 import { Character } from '@/types/api';
 
 export default function CharacterCards({
-  onSelectCharacter,
-  searchTerm,
-  selectedCharacter
+  characterPanelId,
+  searchTerm
 }: {
   searchTerm: string;
-  onSelectCharacter: (characterId: number, episodes: string[]) => void;
-  selectedCharacter: number | null;
+  characterPanelId: number;
 }) {
   const { characters, isError, isLoading } = useCharacters(searchTerm);
 
@@ -21,7 +20,7 @@ export default function CharacterCards({
   }
 
   if (isError) {
-    return <div>Something went wrong...</div>;
+    return <ApiErrorMessage />;
   }
 
   if (characters && Array.isArray(characters) && characters.length > 0) {
@@ -53,8 +52,7 @@ export default function CharacterCards({
             <CharacterCard
               key={character.id}
               character={character}
-              selectedCharacter={selectedCharacter}
-              onSelectCharacter={onSelectCharacter}
+              characterPanelId={characterPanelId}
             />
           );
         })}
