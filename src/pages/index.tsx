@@ -1,8 +1,9 @@
-import { Container } from '@chakra-ui/react';
+import { Container, Stack } from '@chakra-ui/react';
 import Head from 'next/head';
 
+import CharacterSelection from '@/components/character-selection/CharacterSelection';
+import Episodes from '@/components/episode-list/Episodes';
 import Navbar from '@/components/navbar/Navbar';
-import RickAndMortyEpisodePicker from '@/components/rick-and-morty-episode-picker/RickAndMortyEpisodePicker';
 
 export default function Home() {
   return (
@@ -22,7 +23,10 @@ export default function Home() {
         }}
       >
         <Navbar />
-        <RickAndMortyEpisodePicker />
+        <Stack direction={'column'}>
+          <CharacterSelection />
+          <Episodes />
+        </Stack>
       </Container>
     </>
   );
