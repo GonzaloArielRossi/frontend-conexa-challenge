@@ -1,19 +1,29 @@
-import { Wrap } from '@chakra-ui/react';
+import { Fragment } from 'react';
 
 import CharacterCard from '@/components/character-selection/CharacterCard';
 import useCharacters from '@/components/character-selection/hooks/useCharacters';
+import useCharacterSelection from '@/components/character-selection/hooks/useCharacterSelection';
 import ApiErrorMessage from '@/components/feedback/ApiErrorMessage';
+import EmptyResults from '@/components/feedback/EmptyResults';
 import Loading from '@/components/feedback/Loading';
-import { Character } from '@/types/api';
+import useScrollToBottomAction from '@/hooks/useScrollToBottomAction';
+import { Character, CharactersResponse } from '@/types/types';
 
 export default function CharacterCards({
   characterPanelId,
+  containerRef,
   searchTerm
 }: {
   searchTerm: string;
   characterPanelId: number;
+  containerRef: React.RefObject<HTMLUListElement>;
 }) {
-  const { characters, isError, isLoading } = useCharacters(searchTerm);
+  const { handleSelectCharacter, selectedCharacters } = useCharacterSelection();
+
+  const { data, fetchNextPage, hasNextPage, isError, isLoading } =
+    useCharacters(searchTerm);
+
+  useScrollToBottomAction(containerRef, fetchNextPage, 0);
 
   if (isLoading) {
     return <Loading />;
@@ -23,40 +33,40 @@ export default function CharacterCards({
     return <ApiErrorMessage />;
   }
 
-  if (characters && Array.isArray(characters) && characters.length > 0) {
+  if (data && Array.isArray(data.pages) && !data.pages[0].results) {
+    return <EmptyResults message={`Oops! No results 🥲`} />;
+  }
+
+  if (
+    data &&
+    Array.isArray(data.pages) &&
+    data.pages.length > 0 &&
+    data.pages[0].results
+  ) {
     return (
-      <Wrap
-        as={'ul'}
-        h={'100%'}
-        justify={{ base: 'center', md: 'flex-start' }}
-        overflowY={'auto'}
-        spacing={4}
-        sx={{
-          '&::-webkit-scrollbar': {
-            width: '0.4em'
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'rgba(0,0,0,.1)',
-            outline: '1px solid slategrey'
-          },
-          '&::-webkit-scrollbar-track': {
-            boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
-            webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
-          },
-          scrollbarGutter: 'stable'
-        }}
-        w={'100%'}
-      >
-        {characters.map((character: Character) => {
+      <>
+        {data.pages.map((page: CharactersResponse, idx) => {
           return (
-            <CharacterCard
-              key={character.id}
-              character={character}
-              characterPanelId={characterPanelId}
-            />
+            // eslint-disable-next-line react/no-array-index-key
+            <Fragment key={idx}>
+              {page.results.map((character: Character) => {
+                const isCurrentCharacterSelected =
+                  selectedCharacters[characterPanelId]?.id === character.id;
+                return (
+                  <CharacterCard
+                    key={character.id}
+                    character={character}
+                    characterPanelId={characterPanelId}
+                    isCurrentCharacterSelected={isCurrentCharacterSelected}
+                    onSelectCharacter={handleSelectCharacter}
+                  />
+                );
+              })}
+            </Fragment>
           );
         })}
-      </Wrap>
+        {hasNextPage && <Loading size={'md'} />}
+      </>
     );
   }
 }

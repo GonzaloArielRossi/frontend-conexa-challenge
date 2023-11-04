@@ -1,8 +1,8 @@
-import { Heading, Input, Stack } from '@chakra-ui/react';
-import debounce from 'just-debounce-it';
-import { useCallback, useState } from 'react';
+import { Heading, Stack } from '@chakra-ui/react';
+import { useState } from 'react';
 
-import CharacterCards from '@/components/character-selection/CharacterCards';
+import CharacterCardsContainer from '@/components/character-selection/CharacterCardsContainer';
+import CharacterSearch from '@/components/character-selection/CharacterSearch';
 
 export default function CharacterSelectionPanel({
   characterPanelId
@@ -10,17 +10,6 @@ export default function CharacterSelectionPanel({
   characterPanelId: number;
 }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [inputValue, setInputValue] = useState('');
-
-  const onSearch = useCallback(
-    debounce((query: string) => setSearchTerm(query), 300),
-    []
-  );
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onSearch(e.target.value);
-  };
 
   return (
     <Stack
@@ -37,19 +26,12 @@ export default function CharacterSelectionPanel({
         as={'h2'}
         fontSize={'lg'}
       >
-        {`Select Character #${characterPanelId}`}
+        {`Select Character #${characterPanelId + 1}`}
       </Heading>
-      <Input
-        h={'40px'}
-        mr={'auto'}
-        name="search"
-        placeholder="Rick, Morty, Beth..."
-        type="search"
-        value={inputValue}
-        w={{ base: '100%', md: '50%' }}
-        onChange={handleInputChange}
+      <CharacterSearch
+        onSearchTermChange={(query: string) => setSearchTerm(query)}
       />
-      <CharacterCards
+      <CharacterCardsContainer
         characterPanelId={characterPanelId}
         searchTerm={searchTerm}
       />

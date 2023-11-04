@@ -14,23 +14,27 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import useCharacterSelection from '@/components/character-selection/hooks/useCharacterSelection';
 import { elipsis } from '@/helpers/elipsis';
-import { Character } from '@/types/api';
+import { Character } from '@/types/types';
 
 import useCharacterBadges from './hooks/useCharacterBadges';
 
 export default function CharacterCard({
   character,
-  characterPanelId
+  characterPanelId,
+  isCurrentCharacterSelected,
+  onSelectCharacter
 }: {
   character: Character;
   characterPanelId: number;
+  isCurrentCharacterSelected: boolean;
+  onSelectCharacter: (
+    isCurrentCharacterSelected: boolean,
+    character: Character,
+    characterPanelId: number
+  ) => void;
 }) {
   const [characterImageScale, setCharacterImageScale] = useState<number>(1);
-
-  const { handleSelectCharacter, isCurrentCharacterSelected } =
-    useCharacterSelection(character, characterPanelId);
 
   const characterBadges = useCharacterBadges(
     character.status,
@@ -60,8 +64,14 @@ export default function CharacterCard({
       rounded={'md'}
       shadow={'lg'}
       userSelect={'none'}
-      w={'300px'}
-      onClick={() => handleSelectCharacter()}
+      w={'280px'}
+      onClick={() => {
+        onSelectCharacter(
+          isCurrentCharacterSelected,
+          character,
+          characterPanelId
+        );
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -81,6 +91,7 @@ export default function CharacterCard({
         <Image
           alt={`${character.name} avatar`}
           h={'100px'}
+          loading={'lazy'}
           roundedLeft={'md'}
           src={character.image}
           transform={`scale(${characterImageScale})`}
@@ -109,7 +120,7 @@ export default function CharacterCard({
                   >
                     <HStack gap={1}>
                       <Icon as={characterBadge.icon} />
-                      <Text>{elipsis(characterBadge.value, 17)}</Text>
+                      <Text>{elipsis(characterBadge.value, 15)}</Text>
                     </HStack>
                   </Tooltip>
                 </Badge>
