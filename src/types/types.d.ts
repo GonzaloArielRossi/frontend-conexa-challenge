@@ -30,6 +30,11 @@ export type Info = {
   prev: string;
 };
 
+export type CharactersResponse = {
+  info: Info;
+  results: Character[];
+};
+
 export type Location = {
   id: number;
   name: string;
