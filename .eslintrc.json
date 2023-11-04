@@ -43,7 +43,6 @@
     "react-hooks/exhaustive-deps": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "prefer-destructuring": "error",
     "perfectionist/sort-objects": [
       "error",
       {
