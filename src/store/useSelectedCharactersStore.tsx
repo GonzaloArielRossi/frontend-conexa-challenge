@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { Character } from '@/types/api';
+import { Character } from '@/types/types';
 
 type SelectedCharactersStore = {
   selectedCharacters: (Character | undefined)[];
@@ -13,6 +13,10 @@ export const useSelectedCharactersStore = create<SelectedCharactersStore>()(
     setSelectedCharacters: (panelIdx, character) => {
       set((state) => {
         const selectedCharacters = [...state.selectedCharacters];
+        if (!character) {
+          selectedCharacters[panelIdx] = undefined;
+          return { selectedCharacters };
+        }
         selectedCharacters[panelIdx] = character;
         return { selectedCharacters };
       });
