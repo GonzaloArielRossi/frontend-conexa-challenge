@@ -14,14 +14,7 @@ export default function Home() {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      <Container
-        as={'main'}
-        maxW={'1400px'}
-        mx={'auto'}
-        sx={{
-          scrollbarGutter: 'stable'
-        }}
-      >
+      <Container as={'main'} maxW={'1400px'} mx={'auto'}>
         <Navbar />
         <Stack direction={'column'}>
           <CharacterSelection />
