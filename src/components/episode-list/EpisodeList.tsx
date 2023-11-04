@@ -1,6 +1,7 @@
-import { Heading, Stack, Text } from '@chakra-ui/react';
+import { Heading, Stack } from '@chakra-ui/react';
 
 import EpisodeItem from '@/components/episode-list/EpisodeItem';
+import EmptyResults from '@/components/feedback/EmptyResults';
 
 export default function EpisodeList({
   episodes,
@@ -10,16 +11,16 @@ export default function EpisodeList({
   title: string;
 }) {
   if (!episodes || !Array.isArray(episodes) || episodes.length === 0) {
-    return (
-      <Stack alignSelf={'center'} direction={'column'} justifySelf={'center'}>
-        <Text>{`This characters don't share any episodes 🥲`}</Text>
-      </Stack>
-    );
+    return <EmptyResults message={`Oops! No shared episodes 🥲`} />;
   }
 
   if (episodes && Array.isArray(episodes) && episodes.length > 0) {
     return (
-      <Stack direction={'column'} justifySelf={'center'}>
+      <Stack
+        direction={'column'}
+        h={{ base: '500px', md: '35vh' }}
+        justifySelf={'center'}
+      >
         <Heading as={'h2'} fontSize={'lg'} padding={4}>
           {title}
         </Heading>

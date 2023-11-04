@@ -2,11 +2,9 @@ import { SimpleGrid, VStack } from '@chakra-ui/react';
 
 export default function EpisodeListContainer({
   areBothCharactersSelected,
-  children,
-  isFetchingEpisodes
+  children
 }: {
   children: React.ReactNode;
-  isFetchingEpisodes: boolean;
   areBothCharactersSelected: boolean;
 }) {
   return (
@@ -15,9 +13,9 @@ export default function EpisodeListContainer({
         as={'section'}
         border={'1px solid white'}
         columns={
-          isFetchingEpisodes || !areBothCharactersSelected
-            ? 1
-            : { base: 1, lg: areBothCharactersSelected ? 3 : 1 }
+          areBothCharactersSelected
+            ? { base: 1, lg: areBothCharactersSelected ? 3 : 1 }
+            : 1
         }
         padding={4}
         rounded={'md'}

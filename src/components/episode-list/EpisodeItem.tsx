@@ -10,6 +10,7 @@ import {
 import { MdDateRange } from 'react-icons/md';
 import { PiFilmSlateBold } from 'react-icons/pi';
 
+import EpisodeRating from '@/components/episode-list/EpisodeRating';
 import useEpisode from '@/components/episode-list/hooks/useEpisode';
 
 export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
@@ -74,6 +75,7 @@ export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
             );
           })}
         </Stack>
+        <EpisodeRating episode={episode} />
       </Stack>
     );
   }

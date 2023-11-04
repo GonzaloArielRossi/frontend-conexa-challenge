@@ -2,6 +2,8 @@ export default function getSharedEpisodes(
   leftEpisodes: string[],
   rightEpisodes: string[]
 ): string[] {
+  if (leftEpisodes.length === 0 || rightEpisodes.length === 0) return [];
+
   const sharedEpisodes: string[] = [];
 
   let shortestArray = leftEpisodes;

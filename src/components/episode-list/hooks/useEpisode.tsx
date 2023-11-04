@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Episode } from '@/types/api';
+import { Episode } from '@/types/types';
 
-const fetchEpisode = async (episodeURL: string) => {
-  const response = await fetch(episodeURL);
+const fetchEpisode = async (episodeURL: string, signal?: AbortSignal) => {
+  const response = await fetch(episodeURL, { signal });
   return response.json();
 };
 
@@ -11,7 +11,7 @@ const useEpisodeQuery = (episodeURL: string) => {
   const episodeNumber = episodeURL.split('/').pop();
   return useQuery({
     cacheTime: Infinity,
-    queryFn: () => fetchEpisode(episodeURL),
+    queryFn: ({ signal }) => fetchEpisode(episodeURL, signal),
     queryKey: ['episodes', episodeNumber],
     refetchOnMount: false,
     refetchOnReconnect: false,
