@@ -12,12 +12,11 @@ import {
   VStack,
   WrapItem
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
-import { elipsis } from '@/helpers/elipsis';
+import useCharacterBadges from '@/components/character-selection/hooks/useCharacterBadges';
 import { Character } from '@/types/types';
-
-import useCharacterBadges from './hooks/useCharacterBadges';
 
 export default function CharacterCard({
   character,
@@ -31,14 +30,16 @@ export default function CharacterCard({
   onSelectCharacter: (
     isCurrentCharacterSelected: boolean,
     character: Character,
-    characterPanelId: number
+    characterPanelId: number,
+    characterRef: React.RefObject<HTMLDivElement>
   ) => void;
 }) {
   const [characterImageScale, setCharacterImageScale] = useState<number>(1);
 
   const characterBadges = useCharacterBadges(
     character.status,
-    character.species
+    character.species,
+    character.location.name
   );
 
   const handleMouseEnter = () => {
@@ -49,8 +50,15 @@ export default function CharacterCard({
     setCharacterImageScale(1);
   };
 
+  const { inView, ref } = useInView({
+    threshold: 0
+  });
+
+  const characterRef = useRef<HTMLDivElement>(null);
+
   return (
     <WrapItem
+      ref={ref}
       _hover={{
         cursor: 'pointer',
         shadow: 'md'
@@ -69,7 +77,8 @@ export default function CharacterCard({
         onSelectCharacter(
           isCurrentCharacterSelected,
           character,
-          characterPanelId
+          characterPanelId,
+          characterRef
         );
       }}
       onMouseEnter={handleMouseEnter}
@@ -87,7 +96,12 @@ export default function CharacterCard({
           zIndex={1}
         />
       )}
-      <Flex direction={'row'} gap={4} justifyContent={'flex-start'}>
+      <Flex
+        ref={characterRef}
+        direction={'row'}
+        gap={4}
+        justifyContent={'flex-start'}
+      >
         <Image
           alt={`${character.name} avatar`}
           h={'100px'}
@@ -97,37 +111,67 @@ export default function CharacterCard({
           transform={`scale(${characterImageScale})`}
           transition={'transform 0.3s ease-in-out'}
         />
-        <VStack alignContent={'flex-start'} justifyContent={'space-around'}>
-          <Tooltip hasArrow={true} label={character.name} openDelay={300}>
-            <Heading alignSelf={'flex-start'} fontSize={'md'}>
-              {elipsis(character.name, 20)}
-            </Heading>
-          </Tooltip>
-          <Stack alignSelf={'flex-start'} bottom={6} direction="column">
-            {characterBadges.map((characterBadge) => {
-              return (
-                <Badge
-                  key={characterBadge.id}
-                  backgroundColor={`${characterBadge.backgroundColor}.500`}
-                  color={'white'}
-                  size={'sm'}
-                  variant="solid"
-                >
-                  <Tooltip
-                    hasArrow={true}
-                    label={`${characterBadge.label}: ${characterBadge.value}`}
-                    openDelay={300}
+        {inView && (
+          <VStack
+            alignContent={'flex-start'}
+            justifyContent={'center'}
+            whiteSpace={'nowrap'}
+          >
+            <Tooltip hasArrow={true} label={character.name} openDelay={300}>
+              <Heading
+                alignSelf={'flex-start'}
+                fontSize={'md'}
+                overflow={'hidden'}
+                textOverflow={'ellipsis'}
+                w={'full'}
+                whiteSpace={'nowrap'}
+              >
+                {character.name}
+              </Heading>
+            </Tooltip>
+            <Stack
+              alignSelf={'flex-start'}
+              direction="column"
+              gap={1}
+              w={'150px'}
+            >
+              {characterBadges.map((characterBadge) => {
+                return (
+                  <Badge
+                    key={characterBadge.id}
+                    backgroundColor={`${characterBadge.backgroundColor}.500`}
+                    color={'white'}
+                    maxWidth={'fit-content'}
+                    overflow={'hidden'}
+                    size={'sm'}
+                    variant="solid"
+                    whiteSpace={'nowrap'}
                   >
-                    <HStack gap={1}>
-                      <Icon as={characterBadge.icon} />
-                      <Text>{elipsis(characterBadge.value, 15)}</Text>
-                    </HStack>
-                  </Tooltip>
-                </Badge>
-              );
-            })}
-          </Stack>
-        </VStack>
+                    <Tooltip
+                      hasArrow={true}
+                      label={`${characterBadge.label}: ${characterBadge.value}`}
+                      openDelay={300}
+                    >
+                      <HStack overflow={'hidden'} whiteSpace={'nowrap'}>
+                        <Icon as={characterBadge.icon} />
+
+                        <Text
+                          fontSize={'xs'}
+                          overflow={'hidden'}
+                          textOverflow={'ellipsis'}
+                          w={'full'}
+                          whiteSpace={'nowrap'}
+                        >
+                          {characterBadge.value}
+                        </Text>
+                      </HStack>
+                    </Tooltip>
+                  </Badge>
+                );
+              })}
+            </Stack>
+          </VStack>
+        )}
       </Flex>
     </WrapItem>
   );

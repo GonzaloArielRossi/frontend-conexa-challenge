@@ -6,9 +6,8 @@ import useCharacterSelection from '@/components/character-selection/hooks/useCha
 import ApiErrorMessage from '@/components/feedback/ApiErrorMessage';
 import EmptyResults from '@/components/feedback/EmptyResults';
 import Loading from '@/components/feedback/Loading';
-import useScrollToBottomAction from '@/hooks/useScrollToBottomAction';
+import useScrollBottomReached from '@/hooks/useScrollBottomReached';
 import { Character, CharactersResponse } from '@/types/types';
-
 export default function CharacterCards({
   characterPanelId,
   containerRef,
@@ -23,7 +22,7 @@ export default function CharacterCards({
   const { data, fetchNextPage, hasNextPage, isError, isLoading } =
     useCharacters(searchTerm);
 
-  useScrollToBottomAction(containerRef, fetchNextPage, 0);
+  useScrollBottomReached(containerRef, fetchNextPage, 0);
 
   if (isLoading) {
     return <Loading />;

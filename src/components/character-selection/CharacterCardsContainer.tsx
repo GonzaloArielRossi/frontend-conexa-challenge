@@ -1,7 +1,7 @@
 import { Wrap } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-import CharacterCards from './CharacterCards';
+import CharacterCards from '@/components/character-selection/CharacterCards';
 
 export default function CharacterCardsContainer({
   characterPanelId,
