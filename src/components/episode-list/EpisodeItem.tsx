@@ -14,7 +14,7 @@ import EpisodeRating from '@/components/episode-list/EpisodeRating';
 import useEpisode from '@/components/episode-list/hooks/useEpisode';
 
 export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
-  const { episode, isError } = useEpisode(episodeURL);
+  const { data: episode, isError } = useEpisode(episodeURL);
 
   if (isError) {
     return <Text>{`Episode: ${episodeURL.split('/').pop()}`} | Not found</Text>;

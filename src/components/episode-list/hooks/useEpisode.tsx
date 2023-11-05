@@ -7,9 +7,9 @@ const fetchEpisode = async (episodeURL: string, signal?: AbortSignal) => {
   return response.json();
 };
 
-const useEpisodeQuery = (episodeURL: string) => {
+export default function useEpisode(episodeURL: string) {
   const episodeNumber = episodeURL.split('/').pop();
-  return useQuery({
+  const useEpisodeQuery = useQuery<Episode>({
     cacheTime: Infinity,
     queryFn: ({ signal }) => fetchEpisode(episodeURL, signal),
     queryKey: ['episodes', episodeNumber],
@@ -18,13 +18,6 @@ const useEpisodeQuery = (episodeURL: string) => {
     refetchOnWindowFocus: false,
     staleTime: Infinity
   });
-};
 
-export default function useEpisode(episodeURL: string) {
-  const { data, isError, isLoading } = useEpisodeQuery(episodeURL);
-  return {
-    episode: data as Episode | null,
-    isError,
-    isLoading
-  };
+  return useEpisodeQuery;
 }
