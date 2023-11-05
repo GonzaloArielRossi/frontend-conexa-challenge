@@ -19,19 +19,17 @@ export default function CharacterSearch({
 
   const onSearch = useCallback(
     debounce((query: string) => {
+      setSelectedCharacters(characterPanelId, undefined);
       if (!query) {
-        setSelectedCharacters(characterPanelId, undefined);
         onSearchTermChange(query);
         setIsSearchIsTooShort(false);
         return;
       }
       if (query.length < 3) {
-        setSelectedCharacters(characterPanelId, undefined);
         setIsSearchIsTooShort(true);
         return;
       }
       setIsSearchIsTooShort(false);
-      setSelectedCharacters(characterPanelId, undefined);
       onSearchTermChange(query);
     }, 300),
     []
