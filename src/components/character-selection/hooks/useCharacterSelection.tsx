@@ -1,6 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import { useCallback } from 'react';
 
+import { useSelectedCharactersRefStore } from '@/store/useSelectedCharactersRefStore';
 import { useSelectedCharactersStore } from '@/store/useSelectedCharactersStore';
 import { Character } from '@/types/types';
 
@@ -13,11 +14,16 @@ export default function useCharacterSelection() {
       state.setSelectedCharacters
     ]);
 
+  const setSelectedCharactersRef = useSelectedCharactersRefStore(
+    (state) => state.setSelectedCharactersRef
+  );
+
   const handleSelectCharacter = useCallback(
     (
       isCurrentCharacterSelected: boolean,
       character: Character,
-      characterPanelId: number
+      characterPanelId: number,
+      characterRef: React.RefObject<HTMLDivElement>
     ) => {
       if (isCurrentCharacterSelected) {
         setSelectedCharacters(characterPanelId, undefined);
@@ -32,9 +38,6 @@ export default function useCharacterSelection() {
       if (isCurrentCharacterAlreadySelected) {
         toast({
           colorScheme: 'cyan',
-          containerStyle: {
-            marginRight: '50px'
-          },
           description: 'Please select a different character',
           duration: 3000,
           isClosable: true,
@@ -46,6 +49,7 @@ export default function useCharacterSelection() {
         return;
       }
       setSelectedCharacters(characterPanelId, character);
+      setSelectedCharactersRef(characterPanelId, characterRef);
     },
     [selectedCharacters]
   );
