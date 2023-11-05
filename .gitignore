@@ -7,8 +7,10 @@
 !.prettierrc
 !.next-env.d.ts
 !.gitignore
-!.next.config.js
 !package.json
 !pnpm-lock.yaml
 !README.md
 !tsconfig.json
+!jest.config.mjs
+!jest.setup.js
+!next-env.d.ts
