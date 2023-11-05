@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from 'react';
 
-export default function useScrollToBottomAction(
+export default function useScrollBottomReached(
   container: RefObject<HTMLUListElement>,
   callback: () => void,
   offset: number = 0
