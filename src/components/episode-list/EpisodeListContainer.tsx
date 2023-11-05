@@ -11,7 +11,7 @@ export default function EpisodeListContainer({
     <VStack w={'100%'}>
       <SimpleGrid
         as={'section'}
-        border={'1px solid white'}
+        border={'2px solid white'}
         columns={
           areBothCharactersSelected
             ? { base: 1, lg: areBothCharactersSelected ? 3 : 1 }

@@ -24,7 +24,7 @@ export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
     const badges = [
       {
         id: 'airDate',
-        backgroundColor: 'cyan',
+        backgroundColor: 'brandCyan',
         icon: MdDateRange,
         label: 'Air Date',
         value: episode?.air_date
@@ -47,10 +47,19 @@ export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
         rounded={'md'}
         shadow={'lg'}
         w={'300px'}
+        whiteSpace={'nowrap'}
       >
-        <Heading as={'h3'} fontSize={'md'}>
-          {episode.name}
-        </Heading>
+        <Tooltip label={episode.name} openDelay={300}>
+          <Heading
+            as={'h3'}
+            fontSize={'md'}
+            overflow={'hidden'}
+            textOverflow={'ellipsis'}
+            whiteSpace={'nowrap'}
+          >
+            {episode.name}
+          </Heading>
+        </Tooltip>
         <Stack alignSelf={'flex-start'} bottom={6} direction="column">
           {badges.map((badge) => {
             return (
@@ -60,6 +69,7 @@ export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
                 color={'white'}
                 size={'sm'}
                 variant="solid"
+                w={'fit-content'}
               >
                 <Tooltip
                   hasArrow={true}

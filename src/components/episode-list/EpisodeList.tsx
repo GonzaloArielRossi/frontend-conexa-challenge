@@ -14,6 +14,12 @@ export default function EpisodeList({
     return <EmptyResults message={`Oops! No shared episodes 🥲`} />;
   }
 
+  const sharedEpisodesCount = episodes.length;
+  const parsedTitle = title.replace(
+    '{{sharedEpisodesCount}}',
+    sharedEpisodesCount.toString()
+  );
+
   if (episodes && Array.isArray(episodes) && episodes.length > 0) {
     return (
       <Stack
@@ -22,7 +28,7 @@ export default function EpisodeList({
         justifySelf={'center'}
       >
         <Heading as={'h2'} fontSize={'lg'} padding={4}>
-          {title}
+          {parsedTitle}
         </Heading>
         <Stack
           as={'ul'}

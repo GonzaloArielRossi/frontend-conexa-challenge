@@ -41,7 +41,10 @@ export default function Episodes() {
         episodes={leftEpisodes}
         title={`${selectedCharacters[0]?.name}'s Episodes`}
       />
-      <EpisodeList episodes={sharedEpisodes} title={`Shared Episodes`} />
+      <EpisodeList
+        episodes={sharedEpisodes}
+        title={`Shared Episodes ({{sharedEpisodesCount}})`}
+      />
       <EpisodeList
         episodes={rightEpisodes}
         title={`${selectedCharacters[1]?.name}'s Episodes`}
