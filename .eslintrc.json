@@ -1,5 +1,4 @@
 {
-  // "root": true,
   "env": {
     "browser": true,
     "es2021": true,
@@ -26,7 +25,8 @@
     "perfectionist"
   ],
   "rules": {
-    "no-unused-vars": ["warn", "all"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"],
     "react/jsx-sort-props": [
       "warn",
       {
@@ -56,5 +56,4 @@
     ],
     "react/no-unknown-property": ["warn", { "ignore": ["jsx", "global"] }]
   }
-  // "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
 }
