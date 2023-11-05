@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
   Tooltip,
+  useColorModeValue,
   VStack,
   WrapItem
 } from '@chakra-ui/react';
@@ -34,7 +35,7 @@ export default function CharacterCard({
     characterRef: React.RefObject<HTMLDivElement>
   ) => void;
 }) {
-  const [characterImageScale, setCharacterImageScale] = useState<number>(1);
+  const [characterImageScale, setCharacterImageScale] = useState<number>(1.1);
 
   const characterBadges = useCharacterBadges(
     character.status,
@@ -43,11 +44,11 @@ export default function CharacterCard({
   );
 
   const handleMouseEnter = () => {
-    setCharacterImageScale(1.1);
+    setCharacterImageScale(1.2);
   };
 
   const handleMouseLeave = () => {
-    setCharacterImageScale(1);
+    setCharacterImageScale(1.1);
   };
 
   const { inView, ref } = useInView({
@@ -55,6 +56,8 @@ export default function CharacterCard({
   });
 
   const characterRef = useRef<HTMLDivElement>(null);
+  const borderColor = useColorModeValue('gray.200', 'white');
+  const shadow = useColorModeValue('md', '');
 
   return (
     <WrapItem
@@ -64,13 +67,13 @@ export default function CharacterCard({
         shadow: 'md'
       }}
       as={'li'}
-      borderColor={isCurrentCharacterSelected ? 'blue.500' : 'white'}
+      borderColor={isCurrentCharacterSelected ? 'blue.500' : borderColor}
       borderWidth={'2px'}
       justifySelf={'flex-start'}
       overflow={'hidden'}
       position={'relative'}
       rounded={'md'}
-      shadow={'lg'}
+      shadow={shadow}
       userSelect={'none'}
       w={'280px'}
       onClick={() => {

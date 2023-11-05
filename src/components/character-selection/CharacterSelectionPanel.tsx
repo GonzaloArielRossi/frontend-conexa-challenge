@@ -1,4 +1,10 @@
-import { Heading, HStack, Icon, Stack } from '@chakra-ui/react';
+import {
+  Heading,
+  HStack,
+  Icon,
+  Stack,
+  useColorModeValue
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
@@ -19,12 +25,13 @@ export default function CharacterSelectionPanel({
 
   const isPanelCharacterSelected =
     selectedCharacters[characterPanelId] !== undefined;
+  const borderColor = useColorModeValue('gray.200', 'white');
 
   return (
     <Stack
       alignContent={'flex-start'}
       border={'2px solid'}
-      borderColor={isPanelCharacterSelected ? 'brandCyan.500' : 'white'}
+      borderColor={isPanelCharacterSelected ? 'brandCyan.500' : borderColor}
       direction={'column'}
       h={{ base: '500px', md: '45vh' }}
       padding={4}

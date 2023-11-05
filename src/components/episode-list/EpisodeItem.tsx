@@ -5,7 +5,8 @@ import {
   Icon,
   Stack,
   Text,
-  Tooltip
+  Tooltip,
+  useColorModeValue
 } from '@chakra-ui/react';
 import { MdDateRange } from 'react-icons/md';
 import { PiFilmSlateBold } from 'react-icons/pi';
@@ -15,11 +16,11 @@ import useEpisode from '@/components/episode-list/hooks/useEpisode';
 
 export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
   const { data: episode, isError } = useEpisode(episodeURL);
+  const borderColor = useColorModeValue('gray.200', 'white');
 
   if (isError) {
     return <Text>{`Episode: ${episodeURL.split('/').pop()}`} | Not found</Text>;
   }
-
   if (episode) {
     const badges = [
       {
@@ -40,7 +41,7 @@ export default function EpisodeItem({ episodeURL }: { episodeURL: string }) {
     return (
       <Stack
         as={'li'}
-        borderColor={'white'}
+        borderColor={borderColor}
         borderWidth={'2px'}
         direction={'column'}
         padding={2}

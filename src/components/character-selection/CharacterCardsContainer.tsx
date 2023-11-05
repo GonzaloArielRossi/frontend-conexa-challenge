@@ -11,7 +11,6 @@ export default function CharacterCardsContainer({
   searchTerm: string;
 }) {
   const containerRef = useRef<HTMLUListElement>(null);
-
   return (
     <Wrap
       ref={containerRef}

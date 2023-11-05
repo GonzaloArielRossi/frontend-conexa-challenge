@@ -1,4 +1,8 @@
-import { extendTheme, type ThemeConfig } from '@chakra-ui/react';
+import {
+  extendTheme,
+  StyleFunctionProps,
+  type ThemeConfig
+} from '@chakra-ui/react';
 
 const config: ThemeConfig = {
   initialColorMode: 'dark',
@@ -46,7 +50,7 @@ const customTheme = extendTheme({
       500: '#616B9E',
       600: '#4E567E',
       700: '#3A405F',
-      800: '#272B3F',
+      800: '#1E212E',
       900: '#131520'
     }
   },
@@ -54,6 +58,13 @@ const customTheme = extendTheme({
   fonts: {
     body: 'var(--font-dm-sans)',
     heading: 'var(--font-century-gothic-bold)'
+  },
+  styles: {
+    global: (props: StyleFunctionProps) => ({
+      body: {
+        color: props.colorMode === 'dark' ? 'white' : '#2C3043'
+      }
+    })
   }
 });
 
