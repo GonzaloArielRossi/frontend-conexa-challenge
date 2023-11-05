@@ -1,9 +1,10 @@
 import { Box, HStack, Text } from '@chakra-ui/react';
-import { PiShootingStarFill } from 'react-icons/pi';
 import { TbStar, TbStarFilled, TbStarHalfFilled } from 'react-icons/tb';
 
 import useEpisodeRating from '@/components/episode-list/hooks/useEpisodeRating';
 import { Episode } from '@/types/types';
+
+import Loading from '../feedback/Loading';
 
 export default function EpisodeRating({ episode }: { episode: Episode }) {
   const seasonId = episode.episode.split('E')[0].replace('S', '');
@@ -19,9 +20,9 @@ export default function EpisodeRating({ episode }: { episode: Episode }) {
 
   if (isLoading) {
     return (
-      <HStack>
-        <PiShootingStarFill />
-      </HStack>
+      <Box h="18px">
+        <Loading size="xs" />
+      </Box>
     );
   }
   if (episodeRating) {
