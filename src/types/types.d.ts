@@ -54,3 +54,35 @@ export type Episode = {
   url: string;
   created: string;
 };
+
+export type Crew = {
+  job?: string;
+  department?: string;
+  credit_id: string;
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: null | string;
+  character?: string;
+  order?: number;
+};
+
+export type Rating = {
+  air_date: Date;
+  crew: Crew[];
+  episode_number: number;
+  guest_stars: Crew[];
+  name: string;
+  overview: string;
+  id: number;
+  production_code: string;
+  runtime: number;
+  season_number: number;
+  still_path: string;
+  vote_average: number;
+  vote_count: number;
+};

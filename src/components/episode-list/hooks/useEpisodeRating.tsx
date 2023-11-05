@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { API_ENDPOINTS } from '@/config/constants';
+import { Rating } from '@/types/types';
 
 const fetchEpisodeRating = async (endpoint: string, signal?: AbortSignal) => {
   const response = await fetch(endpoint, {
@@ -12,12 +13,12 @@ const fetchEpisodeRating = async (endpoint: string, signal?: AbortSignal) => {
   return response.json();
 };
 
-const useEpisodeRatingQuery = (
-  endpoint: string,
-  seasonId: string,
-  episodeId: string
-) => {
-  return useQuery({
+export default function useEpisodeRating(seasonId: string, episodeId: string) {
+  const endpoint = API_ENDPOINTS.EPISODE_RATING.replace(
+    '[seasonId]',
+    seasonId
+  ).replace('[episodeId]', episodeId);
+  const episodeRatingQuery = useQuery<Rating>({
     cacheTime: Infinity,
     queryFn: ({ signal }) => fetchEpisodeRating(endpoint, signal),
     queryKey: ['episodes', 'ratings', { seasonId }, { episodeId }],
@@ -26,20 +27,5 @@ const useEpisodeRatingQuery = (
     refetchOnWindowFocus: false,
     staleTime: Infinity
   });
-};
-export default function useEpisodeRating(seasonId: string, episodeId: string) {
-  const endpoint = API_ENDPOINTS.EPISODE_RATING.replace(
-    '[seasonId]',
-    seasonId
-  ).replace('[episodeId]', episodeId);
-  const { data, isError, isLoading } = useEpisodeRatingQuery(
-    endpoint,
-    seasonId,
-    episodeId
-  );
-  return {
-    episodeRating: data,
-    isError,
-    isLoading
-  };
+  return episodeRatingQuery;
 }

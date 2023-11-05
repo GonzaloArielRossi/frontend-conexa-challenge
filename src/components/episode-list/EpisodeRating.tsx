@@ -9,10 +9,11 @@ import Loading from '../feedback/Loading';
 export default function EpisodeRating({ episode }: { episode: Episode }) {
   const seasonId = episode.episode.split('E')[0].replace('S', '');
   const episodeId = episode.episode.split('E')[1];
-  const { episodeRating, isError, isLoading } = useEpisodeRating(
-    seasonId,
-    episodeId
-  );
+  const {
+    data: episodeRating,
+    isError,
+    isLoading
+  } = useEpisodeRating(seasonId, episodeId);
 
   if (isError) {
     return null;
