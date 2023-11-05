@@ -99,7 +99,7 @@ export default function CharacterCard({
       <Flex
         ref={characterRef}
         direction={'row'}
-        gap={4}
+        gap={3}
         justifyContent={'flex-start'}
       >
         <Image
@@ -115,6 +115,8 @@ export default function CharacterCard({
           <VStack
             alignContent={'flex-start'}
             justifyContent={'center'}
+            mx={'auto'}
+            w={'150px'}
             whiteSpace={'nowrap'}
           >
             <Tooltip hasArrow={true} label={character.name} openDelay={300}>
