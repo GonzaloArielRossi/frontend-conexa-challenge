@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
-import { FaHeart, FaPassport } from 'react-icons/fa';
+import { FaHeart, FaMapPin, FaPassport } from 'react-icons/fa';
 
 import { CHARACTER_STATUSES } from '@/config/constants';
 
 export default function useCharacterBadges(
   characterStatus: string,
-  characterSpecies: string
+  characterSpecies: string,
+  characterLocationName: string
 ) {
   const getStatusBadgeColor = useCallback((characterStatus: string) => {
     if (characterStatus === CHARACTER_STATUSES.ALIVE) {
@@ -17,30 +18,10 @@ export default function useCharacterBadges(
     return 'gray';
   }, []);
 
-  // This function generates a random color based on the character species.
-  // Same species will always generate the same color.
-  const getSpeciesBadgeColor = useCallback((characterSpecies: string) => {
-    const candidateColors = [
-      'blue',
-      'cyan',
-      'purple',
-      'pink',
-      'yellow',
-      'red',
-      'green'
-    ];
-    const idx =
-      characterSpecies
-        .split('')
-        .reduce((acc, curr) => acc + curr.charCodeAt(0), 0) %
-      candidateColors.length;
-    return candidateColors[idx];
-  }, []);
-
   const badges = [
     {
       id: 'species',
-      backgroundColor: getSpeciesBadgeColor(characterSpecies),
+      backgroundColor: 'brandCyan',
       icon: FaPassport,
       label: 'Species',
       value: characterSpecies
@@ -51,6 +32,13 @@ export default function useCharacterBadges(
       icon: FaHeart,
       label: 'Status',
       value: characterStatus
+    },
+    {
+      id: 'locationName',
+      backgroundColor: 'purple',
+      icon: FaMapPin,
+      label: 'Location',
+      value: characterLocationName
     }
   ];
 
