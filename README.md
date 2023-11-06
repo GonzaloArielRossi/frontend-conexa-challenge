@@ -17,6 +17,10 @@ Author of this app: Gonzalo Ariel Rossi
 - Cache management to avoid re-fetching the same episode/character/rating.
 - Dark/Light themes
 
+## Design 🎨
+
+I recreated the color pallete and fonts from [conexa's website](https://conexa.ai/)
+
 ## Tech Stack 🔮
 
 - Next.js
