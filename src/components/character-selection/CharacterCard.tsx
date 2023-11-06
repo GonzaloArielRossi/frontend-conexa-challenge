@@ -93,6 +93,7 @@ export default function CharacterCard({
           h={'100%'}
           left={0}
           opacity={0.2}
+          pointerEvents={'none'}
           position={'absolute'}
           top={0}
           w={'100%'}
