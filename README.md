@@ -27,14 +27,14 @@ Author of this app: Gonzalo Ariel Rossi
 
 ## Deployment 🚀
 
-🔗 [Deployed app](linkto/deploy)
+🔗 [Deployed app](https://gonzalorossi-conexa.vercel.app/)
 
 ## Running this project locally 💻
 
 ### Clone this repository
 
 ```bash
-git clone xxx
+git clone https://github.com/GonzaloArielRossi/frontend-conexa-challenge.git
 ```
 
 ### Install dependencies
@@ -61,11 +61,3 @@ pnpm run start
 ### Open the app:
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Learn More
-
-NEXT:
-TESTS!
-README
-DEPLOY
-CHECK WITH MAX
