@@ -105,15 +105,17 @@ export default function CharacterCard({
         gap={3}
         justifyContent={'flex-start'}
       >
-        <Image
-          alt={`${character.name} avatar`}
-          h={'100px'}
-          loading={'lazy'}
-          roundedLeft={'md'}
-          src={character.image}
-          transform={`scale(${characterImageScale})`}
-          transition={'transform 0.3s ease-in-out'}
-        />
+        <Box h={'100px'} overflow={'hidden'} w={'100px'}>
+          <Image
+            alt={`${character.name} avatar`}
+            h={'100px'}
+            loading={'lazy'}
+            roundedLeft={'md'}
+            src={character.image}
+            transform={`scale(${characterImageScale})`}
+            transition={'transform 0.3s ease-in-out'}
+          />
+        </Box>
         {inView && (
           <VStack
             alignContent={'flex-start'}
